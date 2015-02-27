@@ -12,13 +12,12 @@
         <module>../demo-wx</module>
         <module>../road-demo</module>
     </modules>
-    <dependencies>
-        <dependency>
-            <groupId>com.meteogroup</groupId>
-            <artifactId>road-demo</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
+    <properties>
+        <scmRoot>https://AltCtrlFreak@github.com/AltCtrlFreak/</scmRoot>
+    </properties>
+<scm>
+    <connection>${scmRoot}release-demo.git</connection>
+</scm>
 
 
 </project>
