@@ -12,7 +12,12 @@
         <module>../demo-wx</module>
         <module>../road-demo</module>
     </modules>
-
+    <properties>
+        <scmRoot>https://AltCtrlFreak@github.com/AltCtrlFreak/</scmRoot>
+    </properties>
+<scm>
+    <connection>${scmRoot}release-demo.git</connection>
+</scm>
 
 
 </project>
