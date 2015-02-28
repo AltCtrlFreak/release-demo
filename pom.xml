@@ -4,11 +4,16 @@
 
     <groupId>com.meteogroup</groupId>
     <artifactId>demo-parent</artifactId>
-    <version>1.0</version>
+    <version>1.0-SNAPSHOTs</version>
     <packaging>pom</packaging>
     <properties>
         <scmRoot>scm:git:https://AltCtrlFreak@github.com/AltCtrlFreak/</scmRoot>
     </properties>
+    <modules>
+        <module>../road-demo</module>
+        <module>../demo-wx</module>
+    </modules>
+
 <scm>
     <connection>${scmRoot}release-demo.git</connection>
   <tag>demo-parent-1.0</tag>
