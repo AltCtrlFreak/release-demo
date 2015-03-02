@@ -11,7 +11,6 @@
     </properties>
 <scm>
     <connection>${scmRoot}release-demo.git</connection>
-  <tag>demo-parent-1.0</tag>
   </scm>
     <build>
         <plugins>
