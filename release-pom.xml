@@ -8,37 +8,39 @@
   <packaging>pom</packaging>
   <scm>
     <connection>scm:git:https://AltCtrlFreak@github.com/AltCtrlFreak/release-demo.git</connection>
-    <tag>demo-parent-1.0a</tag>
+    <tag>demo-parent-1.0c</tag>
   </scm>
   <properties>
+    <sonar.host.url>http://localhost:9000</sonar.host.url>
     <scmRoot>scm:git:https://AltCtrlFreak@github.com/AltCtrlFreak/</scmRoot>
   </properties>
   <repositories>
     <repository>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
       <snapshots>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
       </snapshots>
       <id>central</id>
-      <name>Central Repository</name>
-      <url>http://repo.maven.apache.org/maven2</url>
+      <url>http://central</url>
     </repository>
   </repositories>
   <pluginRepositories>
     <pluginRepository>
       <releases>
-        <updatePolicy>never</updatePolicy>
+        <enabled>true</enabled>
       </releases>
       <snapshots>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
       </snapshots>
       <id>central</id>
-      <name>Central Repository</name>
-      <url>http://repo.maven.apache.org/maven2</url>
+      <url>http://central</url>
     </pluginRepository>
   </pluginRepositories>
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
-    <scriptSourceDirectory>/Users/frits/demo/release-demo/src/main/scripts</scriptSourceDirectory>
+    <scriptSourceDirectory>d:\git\release-demo\src\main\scripts</scriptSourceDirectory>
     <testSourceDirectory>src/test/java</testSourceDirectory>
     <outputDirectory>target/classes</outputDirectory>
     <testOutputDirectory>target/test-classes</testOutputDirectory>
