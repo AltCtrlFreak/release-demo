@@ -4,13 +4,14 @@
 
     <groupId>com.meteogroup</groupId>
     <artifactId>demo-parent</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>pom</packaging>
     <properties>
         <scmRoot>scm:git:https://AltCtrlFreak@github.com/AltCtrlFreak/</scmRoot>
     </properties>
 <scm>
     <connection>${scmRoot}release-demo.git</connection>
+    <tag>demo-parent-1.c</tag>
   </scm>
     <build>
         <plugins>
