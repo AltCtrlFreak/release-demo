@@ -9,7 +9,10 @@
     <properties>
         <scmRoot>scm:git:https://AltCtrlFreak@github.com/AltCtrlFreak/</scmRoot>
     </properties>
-
+<modules>
+    <module>../road-demo</module>
+    <module>../demo-wx</module>
+</modules>
 <scm>
     <connection>${scmRoot}release-demo.git</connection>
   <tag>demo-parent-1.0c</tag>
@@ -19,7 +22,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>2.5.1</version>
+                <version>2.3.2</version>
                 <configuration>
                     <pushChanges>true</pushChanges>
                     <localCheckout>true</localCheckout>
