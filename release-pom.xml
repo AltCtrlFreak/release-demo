@@ -8,6 +8,7 @@
   <packaging>pom</packaging>
   <scm>
     <connection>scm:git:https://AltCtrlFreak@github.com/AltCtrlFreak/release-demo.git</connection>
+    <tag>demo-parent-1.c</tag>
   </scm>
   <properties>
     <sonar.host.url>http://localhost:9000</sonar.host.url>
