@@ -15,6 +15,7 @@
     </modules>
 <scm>
     <connection>${scmRoot}release-demo.git</connection>
+    <developerConnection>${scmRoot}release-demo.git</developerConnection>
   </scm>
     <build>
         <plugins>
