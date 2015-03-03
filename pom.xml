@@ -24,7 +24,7 @@
                 <version>2.5.1</version>
                 <configuration>
                     <localCheckout>false</localCheckout>
-                    <commitByProject>true</commitByProject>
+                    <commitByProject>false</commitByProject>
                 </configuration>
             </plugin>
         </plugins>
