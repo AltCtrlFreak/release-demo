@@ -26,7 +26,7 @@
                 <configuration>
                     <localCheckout>false</localCheckout>
                     <commitByProject>true</commitByProject>
-                    <localRepoDirectory>${project.build.directory}\checkout</localRepoDirectory>
+                    <localRepoDirectory>${project.build.directory}\checkout\release-demo</localRepoDirectory>
                 </configuration>
             </plugin>
         </plugins>
