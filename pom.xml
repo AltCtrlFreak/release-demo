@@ -3,27 +3,23 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.meteogroup</groupId>
-    <artifactId>demo-parent</artifactId>
-    <version>1.5</version>
+    <artifactId>release-demo</artifactId> 
+    <version>2.9-SNAPSHOT</version>
     <packaging>pom</packaging>
     <properties>
-        <scmRoot>scm:git:https://AltCtrlFreak@github.com/AltCtrlFreak/</scmRoot>
+        <scmRoot>scm:git:https://AltCtrlFreak@github.com/AltCtrlFreak/release-demo.git</scmRoot>
     </properties>
     
     
-    
-    <modules>
-        <module>../demo-wx</module>
-        <module>../road-demo</module>
-    </modules>
     
     
     
     
 <scm>
-    <connection>${scmRoot}release-demo.git</connection>
-    <developerConnection>${scmRoot}release-demo.git</developerConnection>
-    <tag>demo-parent-1.3</tag>
+    <connection>scm:git:https://AltCtrlFreak@github.com/AltCtrlFreak/release-demo.git</connection>
+    <url>scm:git:https://AltCtrlFreak@github.com/AltCtrlFreak/release-demo.git</url>
+    <developerConnection>scm:git:https://AltCtrlFreak@github.com/AltCtrlFreak/release-demo.git</developerConnection>
+    <tag>root-1.8</tag>
   </scm>
     <build>
         <plugins>
@@ -32,8 +28,6 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.3</version>
                 <configuration>
-                    <pushChanges>false</pushChanges>
-                    <localCheckout>false</localCheckout>
                     <commitByProject>true</commitByProject>
                 </configuration>
             </plugin>
