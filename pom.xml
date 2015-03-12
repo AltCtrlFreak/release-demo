@@ -26,12 +26,11 @@
                 <version>2.5.1</version>
                 <configuration>
                     <pushChanges>true</pushChanges>
-                    <localCheckout>false</localCheckout>
+                    <localCheckout>true</localCheckout>
                     <commitByProject>true</commitByProject>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
 
 </project>
