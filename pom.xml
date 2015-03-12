@@ -4,7 +4,7 @@
 
     <groupId>com.meteogroup</groupId>
     <artifactId>demo-parent</artifactId>
-    <version>1.3</version>
+    <version>1.3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <properties>
         <scmRoot>scm:git:https://AltCtrlFreak@github.com/AltCtrlFreak/</scmRoot>
@@ -16,7 +16,6 @@
 <scm>
     <connection>${scmRoot}release-demo.git</connection>
     <developerConnection>${scmRoot}release-demo.git</developerConnection>
-    <tag>demo-parent-1.3</tag>
   </scm>
     <build>
         <plugins>
