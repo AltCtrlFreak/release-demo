@@ -25,8 +25,8 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.5.1</version>
                 <configuration>
-                    <pushChanges>false</pushChanges>
-                    <localCheckout>true</localCheckout>
+                    <pushChanges>true</pushChanges>
+                    <localCheckout>false</localCheckout>
                     <commitByProject>true</commitByProject>
                 </configuration>
             </plugin>
