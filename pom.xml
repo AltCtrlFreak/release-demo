@@ -16,7 +16,6 @@
 <scm>
     <connection>${scmRoot}release-demo.git</connection>
     <developerConnection>${scmRoot}release-demo.git</developerConnection>
-    <tag>demo-parent-1.2</tag>
   </scm>
     <build>
         <plugins>
@@ -26,7 +25,7 @@
                 <version>2.3</version>
                 <configuration>
                     <pushChanges>false</pushChanges>
-                    <localCheckout>false</localCheckout>
+                    <localCheckout>true</localCheckout>
                     <commitByProject>true</commitByProject>
                 </configuration>
             </plugin>
