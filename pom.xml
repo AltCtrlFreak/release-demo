@@ -10,8 +10,8 @@
         <scmRoot>scm:git:https://AltCtrlFreak@github.com/AltCtrlFreak/</scmRoot>
     </properties>
     <modules>
-        <module>../road-demo</module>
-        <module>../demo-wx</module>
+        <module>road-demo</module>
+        <module>demo-wx</module>
     </modules>
 <scm>
     <connection>${scmRoot}release-demo.git</connection>
