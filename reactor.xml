@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.meteogroup</groupId>
+    <artifactId>demo-parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <properties>
+        <scmRoot>scm:git:https://AltCtrlFreak@github.com/AltCtrlFreak/</scmRoot>
+    </properties>
+<modules>
+<module>../demo-wx</module>
+    <module>../road-demo</module>
+</modules>
+
+<scm>
+    <connection>${scmRoot}release-demo.git</connection>
+  <tag>demo-parent-1.0a</tag>
+  </scm>
+    <build>
+        <plugins>
+<plugin>
+  <groupId>org.codehaus.gmaven</groupId>
+  <artifactId>groovy-maven-plugin</artifactId>
+<version>2.0</version><dependencies>
+    <dependency>
+        <groupId>xalan</groupId>
+        <artifactId>xalan</artifactId>
+        <version>2.7.1</version>
+    </dependency>
+
+</dependencies><executions><execution><phase>validate</phase>
+<goals><goal>execute</goal></goals>
+
+<configuration><source>
+    <![CDATA[
+import org.apache.xpath.XPathAPI
+import groovy.xml.*
+    import java.io.File;
+import javax.xml.parsers.DocumentBuilderFactory
+
+    builder     = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+    f = new File("./reactor.xml");
+    artifactMappings = new HashMap();
+    snapshotMappings = new HashMap();
+    branch = getBranch()
+
+    def processModule(module) {
+    def path = XPathAPI.eval(module, './text()').str()
+    File moduleFile = new File(path + "/pom.xml")
+    def version = getVersion(moduleFile)
+    def artifact = getArtifact(moduleFile)
+    def defaultReleaseVersion = version
+    if (version.indexOf('-') >=0) defaultReleaseVersion = version.substring(0, version.indexOf('-'))
+
+    def readln = javax.swing.JOptionPane.&showInputDialog
+    def releaseVersion = readln 'Release version for module '  + artifact + '(' + defaultReleaseVersion + ')'
+    if (releaseVersion.equals('')) releaseVersion = defaultReleaseVersion
+
+    updatePomVersion(moduleFile, version, releaseVersion)
+    artifactMappings.put(artifact, releaseVersion)
+    def minorVersion = getMinorVersion(releaseVersion) + 1
+    def majorVersion = getMajorVersion(releaseVersion)
+    def defaultSnapshotVersion = majorVersion +'.'  + minorVersion + "-SNAPSHOT";
+    def snapShotVersion = readln 'Snapshot version for module '  + artifact + '(' + defaultSnapshotVersion + ')'
+    if (snapShotVersion.equals('')) snapShotVersion = defaultSnapshotVersion;
+    snapshotMappings.put(artifact, snapShotVersion)
+
+
+//    updateArtifactDependency(f, artifact, version, releaseVersion)
+    }
+
+    def getMinorVersion(version) {
+      return Integer.valueOf(version.substring(version.lastIndexOf('.') + 1))
+    }
+
+    def getMajorVersion(version) {
+      return version.substring(0, version.lastIndexOf('.'))
+    }
+     def getBranch() {
+        def readln = javax.swing.JOptionPane.&showInputDialog
+     branch = readln 'Release branch name'
+    }
+
+    def updatePomVersion(pomFile, version, updatedVersion) {
+     def inputStream = new FileInputStream(pomFile)
+    def records     = builder.parse(inputStream).documentElement
+    XPathAPI.selectNodeList(records, '//project/version').each({
+    it.getFirstChild().setNodeValue(updatedVersion)
+    })
+    PrintWriter pw = new PrintWriter(pomFile)
+    pw.print(XmlUtil.serialize(records))
+    pw.flush()
+    }
+
+    def updateArtifactDependency(pomFile, artifact, updatedVersion) {
+    println('replace artifact ' + artifact + ' with version ' + updatedVersion)
+     def inputStream = new FileInputStream(pomFile)
+    def records     = builder.parse(inputStream).documentElement
+    XPathAPI.selectNodeList(records, '//project/dependencies/dependency/version[../artifactId/text()="' + artifact +'"]')
+    .each({
+        it.getFirstChild().setNodeValue(updatedVersion)
+
+
+    })
+     PrintWriter pw = new PrintWriter(pomFile)
+    pw.print(XmlUtil.serialize(records))
+    pw.flush()
+    }
+
+    def updateModuleDependencies(module, artifactId) {
+      def path = XPathAPI.eval(module, './text()').str()
+    File moduleFile = new File(path + "/pom.xml")
+  updateArtifactDependency(moduleFile, artifactId, artifactMappings.get(artifactId))
+  }
+
+    def getVersion(file) {
+    def inputStream = new FileInputStream(file)
+    def records     = builder.parse(inputStream).documentElement
+    def v = XPathAPI.eval(records, '//project/version')
+    return v.str()
+    }
+
+    def commitToGit(module) {
+    def path = XPathAPI.eval(module, './text()').str()
+
+    def p = 'git commit -am "release"'.execute(null, new File(path))
+    p.waitFor()
+    def cmd = 'git push origin ' + branch
+    p = cmd.execute(null, new File(path))
+    p.waitFor()
+
+
+    }
+
+    def mergeMasterWithRelease(module) {
+     def path = XPathAPI.eval(module, './text()').str()
+
+    def p = 'git checkout master'.execute(null, new File(path))
+    p.waitFor()
+    def cmd = 'git merge --no-ff '  + branch
+    p = cmd.execute(null, new File(path))
+    p.waitFor()
+    cmd = 'git push origin master'
+    p = cmd.execute(null, new File(path))
+    p.waitFor()
+    cmd = 'git checkout '  + branch
+    p = cmd.execute(null, new File(path))
+    p.waitFor()
+
+    }
+
+        def mergeDevelopWithRelease(module) {
+     def path = XPathAPI.eval(module, './text()').str()
+
+    def p = 'git checkout develop'.execute(null, new File(path))
+    p.waitFor()
+    def cmd = 'git merge --no-ff '  + branch
+    p = cmd.execute(null, new File(path))
+    p.waitFor()
+    cmd = 'git push origin develop'
+    p = cmd.execute(null, new File(path))
+    p.waitFor()
+    cmd = 'git checkout '  + branch
+    p = cmd.execute(null, new File(path))
+    p.waitFor()
+
+    }
+
+    def updateModuleSnapshots(module, artifactId) {
+      def path = XPathAPI.eval(module, './text()').str()
+    File moduleFile = new File(path + "/pom.xml")
+  updateArtifactDependency(moduleFile, artifactId, snapshotMappings.get(artifactId))    }
+
+    def updateSnapshotVersion(module) {
+        def path = XPathAPI.eval(module, './text()').str()
+         File moduleFile = new File(path + "/pom.xml")
+         def artifactId = getArtifact(moduleFile)
+         def snapshotVersion = snapshotMappings.get(artifactId)
+         updatePomVersion(path +"/pom.xml", null, snapshotVersion)
+    }
+
+    def getArtifact(file) {
+    def inputStream = new FileInputStream(file)
+    def records     = builder.parse(inputStream).documentElement
+    def v = XPathAPI.eval(records, '//project/artifactId')
+    return v.str()
+    }
+    def inputStream = new FileInputStream(f)
+    def records     = builder.parse(inputStream).documentElement
+
+    XPathAPI.selectNodeList(records, '//module').each{ processModule(it) }
+    artifactMappings.keySet().each{
+    def key = it;
+    XPathAPI.selectNodeList(records, '//module').each{ updateModuleDependencies(it, key) }}
+    XPathAPI.selectNodeList(records, '//module').each{ commitToGit(it) }
+    XPathAPI.selectNodeList(records, '//module').each{ mergeMasterWithRelease(it) }
+
+    XPathAPI.selectNodeList(records, '//module').each{ updateSnapshotVersion(it) }
+    snapshotMappings.keySet().each{
+    def key = it
+    XPathAPI.selectNodeList(records, '//module').each{ updateModuleSnapshots(it, key) }}
+    XPathAPI.selectNodeList(records, '//module').each{ commitToGit(it) }
+    XPathAPI.selectNodeList(records, '//module').each{ mergeDevelopWithRelease(it) }
+
+
+
+
+]]></source>
+</configuration>
+</execution>
+</executions>
+</plugin>
+</plugins>
+    </build>
+
+
+</project>
